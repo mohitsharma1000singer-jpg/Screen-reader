@@ -1,0 +1,612 @@
+name: Build MyScreenReader Debug APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Write app/build.gradle
+        run: |
+          mkdir -p "$(dirname 'app/build.gradle')"
+          rm -f tmp_app_build_gradle.b64
+          echo 'YXBwbHkgcGx1Z2luOiAnY29tLmFuZHJvaWQuYXBwbGljYXRpb24nCmFwcGx5IHBsdWdpbjogJ2tv' >> tmp_app_build_gradle.b64
+          echo 'dGxpbi1hbmRyb2lkJwoKYW5kcm9pZCB7CiAgICBuYW1lc3BhY2UgJ2NvbS5tb2hpdC5zY3JlZW5y' >> tmp_app_build_gradle.b64
+          echo 'ZWFkZXInCiAgICBjb21waWxlU2RrIDM0CgogICAgc2lnbmluZ0NvbmZpZ3MgewogICAgICAgIGRl' >> tmp_app_build_gradle.b64
+          echo 'YnVnIHsKICAgICAgICAgICAgc3RvcmVGaWxlIHJvb3RQcm9qZWN0LmZpbGUoJ2RlYnVnLmtleXN0' >> tmp_app_build_gradle.b64
+          echo 'b3JlJykKICAgICAgICAgICAgc3RvcmVQYXNzd29yZCAnYW5kcm9pZCcKICAgICAgICAgICAga2V5' >> tmp_app_build_gradle.b64
+          echo 'QWxpYXMgJ2FuZHJvaWRkZWJ1Z2tleScKICAgICAgICAgICAga2V5UGFzc3dvcmQgJ2FuZHJvaWQn' >> tmp_app_build_gradle.b64
+          echo 'CiAgICAgICAgfQogICAgfQoKICAgIGRlZmF1bHRDb25maWcgewogICAgICAgIGFwcGxpY2F0aW9u' >> tmp_app_build_gradle.b64
+          echo 'SWQgImNvbS5tb2hpdC5zY3JlZW5yZWFkZXIiCiAgICAgICAgbWluU2RrIDI2CiAgICAgICAgdGFy' >> tmp_app_build_gradle.b64
+          echo 'Z2V0U2RrIDM0CiAgICAgICAgdmVyc2lvbkNvZGUgMQogICAgICAgIHZlcnNpb25OYW1lICIxLjAi' >> tmp_app_build_gradle.b64
+          echo 'CiAgICB9CgogICAgYnVpbGRUeXBlcyB7CiAgICAgICAgZGVidWcgewogICAgICAgICAgICBkZWJ1' >> tmp_app_build_gradle.b64
+          echo 'Z2dhYmxlIHRydWUKICAgICAgICAgICAgc2lnbmluZ0NvbmZpZyBzaWduaW5nQ29uZmlncy5kZWJ1' >> tmp_app_build_gradle.b64
+          echo 'ZwogICAgICAgIH0KICAgIH0KCiAgICBjb21waWxlT3B0aW9ucyB7CiAgICAgICAgc291cmNlQ29t' >> tmp_app_build_gradle.b64
+          echo 'cGF0aWJpbGl0eSBKYXZhVmVyc2lvbi5WRVJTSU9OXzE3CiAgICAgICAgdGFyZ2V0Q29tcGF0aWJp' >> tmp_app_build_gradle.b64
+          echo 'bGl0eSBKYXZhVmVyc2lvbi5WRVJTSU9OXzE3CiAgICB9CgogICAga290bGluT3B0aW9ucyB7CiAg' >> tmp_app_build_gradle.b64
+          echo 'ICAgICAganZtVGFyZ2V0ID0gIjE3IgogICAgfQoKICAgIGJ1aWxkRmVhdHVyZXMgewogICAgICAg' >> tmp_app_build_gradle.b64
+          echo 'IHZpZXdCaW5kaW5nIGZhbHNlCiAgICB9Cn0KCmRlcGVuZGVuY2llcyB7CiAgICBpbXBsZW1lbnRh' >> tmp_app_build_gradle.b64
+          echo 'dGlvbiAib3JnLmpldGJyYWlucy5rb3RsaW46a290bGluLXN0ZGxpYjoxLjkuMjQiCn0K' >> tmp_app_build_gradle.b64
+          base64 -d tmp_app_build_gradle.b64 > 'app/build.gradle'
+          rm -f tmp_app_build_gradle.b64
+      - name: Write app/src/main/AndroidManifest.xml
+        run: |
+          mkdir -p "$(dirname 'app/src/main/AndroidManifest.xml')"
+          rm -f tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPG1hbmlmZXN0IHhtbG5zOmFu' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'ZHJvaWQ9Imh0dHA6Ly9zY2hlbWFzLmFuZHJvaWQuY29tL2Fway9yZXMvYW5kcm9pZCI+CgogICAg' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'PHF1ZXJpZXM+CiAgICAgICAgPGludGVudD4KICAgICAgICAgICAgPGFjdGlvbiBhbmRyb2lkOm5h' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'bWU9ImFuZHJvaWQuaW50ZW50LmFjdGlvbi5UVFNfU0VSVklDRSIgLz4KICAgICAgICA8L2ludGVu' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'dD4KICAgIDwvcXVlcmllcz4KCiAgICA8YXBwbGljYXRpb24KICAgICAgICBhbmRyb2lkOmFsbG93' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'QmFja3VwPSJ0cnVlIgogICAgICAgIGFuZHJvaWQ6bGFiZWw9IkBzdHJpbmcvYXBwX25hbWUiCiAg' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'ICAgICAgYW5kcm9pZDppY29uPSJAYW5kcm9pZDpkcmF3YWJsZS9zeW1fZGVmX2FwcF9pY29uIgog' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'ICAgICAgIGFuZHJvaWQ6c3VwcG9ydHNSdGw9InRydWUiCiAgICAgICAgYW5kcm9pZDp0aGVtZT0i' >>  tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'QGFuZHJvaWQ6c3R5bGUvVGhlbWUuRGV2aWNlRGVmYXVsdCI+CgogICAgICAgIDxhY3Rpdml0eQog' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'ICAgICAgICAgICBhbmRyb2lkOm5hbWU9Ii5NYWluQWN0aXZpdHkiCiAgICAgICAgICAgIGFuZHJv' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'aWQ6ZXhwb3J0ZWQ9InRydWUiCiAgICAgICAgICAgIGFuZHJvaWQ6bGFiZWw9IkBzdHJpbmcvYXBw' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'X25hbWUiPgogICAgICAgICAgICA8aW50ZW50LWZpbHRlcj4KICAgICAgICAgICAgICAgIDxhY3Rp' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'b24gYW5kcm9pZDpuYW1lPSJhbmRyb2lkLmludGVudC5hY3Rpb24uTUFJTiIgLz4KICAgICAgICAg' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'ICAgICAgIDxjYXRlZ29yeSBhbmRyb2lkOm5hbWU9ImFuZHJvaWQuaW50ZW50LmNhdGVnb3J5LkxB' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'VU5DSEVSIiAvPgogICAgICAgICAgICA8L2ludGVudC1maWx0ZXI+CiAgICAgICAgPC9hY3Rpdml0' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'eT4KCiAgICAgICAgPGFjdGl2aXR5CiAgICAgICAgICAgIGFuZHJvaWQ6bmFtZT0iLlR0c0VuZ2lu' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'ZUFjdGl2aXR5IgogICAgICAgICAgICBhbmRyb2lkOmV4cG9ydGVkPSJmYWxzZSIKICAgICAgICAg' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'ICAgYW5kcm9pZDpsYWJlbD0iQHN0cmluZy90dHNfYnV0dG9uIiAvPgoKICAgICAgICA8YWN0aXZp' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'dHkKICAgICAgICAgICAgYW5kcm9pZDpuYW1lPSIuU291bmRTY2hlbWVBY3Rpdml0eSIKICAgICAg' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'ICAgICAgYW5kcm9pZDpleHBvcnRlZD0iZmFsc2UiCiAgICAgICAgICAgIGFuZHJvaWQ6bGFiZWw9' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'IkBzdHJpbmcvc291bmRfYnV0dG9uIiAvPgoKICAgICAgICA8c2VydmljZQogICAgICAgICAgICBh' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'bmRyb2lkOm5hbWU9Ii5NeVNjcmVlblJlYWRlclNlcnZpY2UiCiAgICAgICAgICAgIGFuZHJvaWQ6' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'cGVybWlzc2lvbj0iYW5kcm9pZC5wZXJtaXNzaW9uLkJJTkRfQUNDRVNTSUJJTElUWV9TRVJWSUNF' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'IgogICAgICAgICAgICBhbmRyb2lkOmV4cG9ydGVkPSJ0cnVlIgogICAgICAgICAgICBhbmRyb2lk' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'OmxhYmVsPSJAc3RyaW5nL2FwcF9uYW1lIj4KICAgICAgICAgICAgPGludGVudC1maWx0ZXI+CiAg' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'ICAgICAgICAgICAgICA8YWN0aW9uIGFuZHJvaWQ6bmFtZT0iYW5kcm9pZC5hY2Nlc3NpYmlsaXR5' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'c2VydmljZS5BY2Nlc3NpYmlsaXR5U2VydmljZSIgLz4KICAgICAgICAgICAgPC9pbnRlbnQtZmls' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'dGVyPgogICAgICAgICAgICA8bWV0YS1kYXRhCiAgICAgICAgICAgICAgICBhbmRyb2lkOm5hbWU9' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'ImFuZHJvaWQuYWNjZXNzaWJpbGl0eXNlcnZpY2UiCiAgICAgICAgICAgICAgICBhbmRyb2lkOnJl' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'c291cmNlPSJAeG1sL2FjY2Vzc2liaWxpdHlfc2VydmljZV9jb25maWciIC8+CiAgICAgICAgPC9z' >> tmp_app_src_main_AndroidManifest_xml.b64
+          echo 'ZXJ2aWNlPgoKICAgIDwvYXBwbGljYXRpb24+CjwvbWFuaWZlc3Q+Cg==' >> tmp_app_src_main_AndroidManifest_xml.b64
+          base64 -d tmp_app_src_main_AndroidManifest_xml.b64 > 'app/src/main/AndroidManifest.xml'
+          rm -f tmp_app_src_main_AndroidManifest_xml.b64
+      - name: Write app/src/main/java/com/mohit/screenreader/MainActivity.kt
+        run: |
+          mkdir -p "$(dirname 'app/src/main/java/com/mohit/screenreader/MainActivity.kt')"
+          rm -f tmp_app_src_main_java_com_mohit_screenreader_MainActivity_kt.b64
+          echo 'cGFja2FnZSBjb20ubW9oaXQuc2NyZWVucmVhZGVyCgppbXBvcnQgYW5kcm9pZC5jb250ZW50Lklu' >> tmp_app_src_main_java_com_mohit_screenreader_MainActivity_kt.b64
+          echo 'dGVudAppbXBvcnQgYW5kcm9pZC5vcy5CdW5kbGUKaW1wb3J0IGFuZHJvaWQucHJvdmlkZXIuU2V0' >> tmp_app_src_main_java_com_mohit_screenreader_MainActivity_kt.b64
+          echo  'dGluZ3MKaW1wb3J0IGFuZHJvaWQud2lkZ2V0LkJ1dHRvbgoKY2xhc3MgTWFpbkFjdGl2aXR5IDog' >> tmp_app_src_main_java_com_mohit_screenreader_MainActivity_kt.b64
+          echo 'YW5kcm9pZC5hcHAuQWN0aXZpdHkoKSB7CgogICAgb3ZlcnJpZGUgZnVuIG9uQ3JlYXRlKHNhdmVk' >> tmp_app_src_main_java_com_mohit_screenreader_MainActivity_kt.b64
+          echo 'SW5zdGFuY2VTdGF0ZTogQnVuZGxlPykgewogICAgICAgIHN1cGVyLm9uQ3JlYXRlKHNhdmVkSW5z' >> tmp_app_src_main_java_com_mohit_screenreader_MainActivity_kt.b64
+          echo 'dGFuY2VTdGF0ZSkKICAgICAgICBzZXRDb250ZW50VmlldyhSLmxheW91dC5hY3Rpdml0eV9tYWlu' >> tmp_app_src_main_java_com_mohit_screenreader_MainActivity_kt.b64
+          echo 'KQoKICAgICAgICBmaW5kVmlld0J5SWQ8QnV0dG9uPihSLmlkLmJ0blR0cykuc2V0T25DbGlja0xp' >> tmp_app_src_main_java_com_mohit_screenreader_MainActivity_kt.b64
+          echo 'c3RlbmVyIHsKICAgICAgICAgICAgc3RhcnRBY3Rpdml0eShJbnRlbnQodGhpcywgVHRzRW5naW5l' >> tmp_app_src_main_java_com_mohit_screenreader_MainActivity_kt.b64
+          echo 'QWN0aXZpdHk6OmNsYXNzLmphdmEpKQogICAgICAgIH0KCiAgICAgICAgZmluZFZpZXdCeUlkPEJ1' >> tmp_app_src_main_java_com_mohit_screenreader_MainActivity_kt.b64
+          echo 'dHRvbj4oUi5pZC5idG5Tb3VuZCkuc2V0T25DbGlja0xpc3RlbmVyIHsKICAgICAgICAgICAgc3Rh' >> tmp_app_src_main_java_com_mohit_screenreader_MainActivity_kt.b64
+          echo 'cnRBY3Rpdml0eShJbnRlbnQodGhpcywgU291bmRTY2hlbWVBY3Rpdml0eTo6Y2xhc3MuamF2YSkp' >> tmp_app_src_main_java_com_mohit_screenreader_MainActivity_kt.b64
+          echo 'CiAgICAgICAgfQoKICAgICAgICBmaW5kVmlld0J5SWQ8QnV0dG9uPihSLmlkLmJ0blNldHRpbmdz' >> tmp_app_src_main_java_com_mohit_screenreader_MainActivity_kt.b64
+          echo 'KS5zZXRPbkNsaWNrTGlzdGVuZXIgewogICAgICAgICAgICBzdGFydEFjdGl2aXR5KEludGVudChT' >> tmp_app_src_main_java_com_mohit_screenreader_MainActivity_kt.b64
+          echo 'ZXR0aW5ncy5BQ1RJT05fQUNDRVNTSUJJTElUWV9TRVRUSU5HUykpCiAgICAgICAgfQogICAgfQp9' >> tmp_app_src_main_java_com_mohit_screenreader_MainActivity_kt.b64
+          echo 'Cg==' >> tmp_app_src_main_java_com_mohit_screenreader_MainActivity_kt.b64
+          base64 -d tmp_app_src_main_java_com_mohit_screenreader_MainActivity_kt.b64 > 'app/src/main/java/com/mohit/screenreader/MainActivity.kt'
+          rm -f tmp_app_src_main_java_com_mohit_screenreader_MainActivity_kt.b64
+      - name: Write app/src/main/java/com/mohit/screenreader/MyScreenReaderService.kt
+        run: |
+          mkdir -p "$(dirname 'app/src/main/java/com/mohit/screenreader/MyScreenReaderService.kt')"
+          rm -f tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'cGFja2FnZSBjb20ubW9oaXQuc2NyZWVucmVhZGVyCgppbXBvcnQgYW5kcm9pZC5hY2Nlc3NpYmls' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'aXR5c2VydmljZS5BY2Nlc3NpYmlsaXR5U2VydmljZQppbXBvcnQgYW5kcm9pZC5jb250ZW50LkNv' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'bnRleHQKaW1wb3J0IGFuZHJvaWQubWVkaWEuQXVkaW9BdHRyaWJ1dGVzCmltcG9ydCBhbmRyb2lk' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'Lm1lZGlhLlNvdW5kUG9vbAppbXBvcnQgYW5kcm9pZC5zcGVlY2gudHRzLlRleHRUb1NwZWVjaApp' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'bXBvcnQgYW5kcm9pZC5zcGVlY2gudHRzLlV0dGVyYW5jZVByb2dyZXNzTGlzdGVuZXIKaW1wb3J0' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'IGFuZHJvaWQudmlldy5hY2Nlc3NpYmlsaXR5LkFjY2Vzc2liaWxpdHlFdmVudAppbXBvcnQgYW5k' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'cm9pZC52aWV3LmFjY2Vzc2liaWxpdHkuQWNjZXNzaWJpbGl0eU5vZGVJbmZvCgovKioKICogTXlT' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'Y3JlZW5SZWFkZXJTZXJ2aWNlIOKAlCBmaXJzdCB3b3JraW5nIHZlcnNpb24gKHYxKS4KICoKICog' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'U3RhbmRhcmQgc2NyZWVuLXJlYWRlciBpbnRlcmZhY2U6CiAqICAgLSBzd2lwZSByaWdodCAgLT4g'  >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'bmV4dCBpdGVtLCBzcG9rZW4gYWxvdWQKICogICAtIHN3aXBlIGxlZnQgICAtPiBwcmV2aW91cyBp' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'dGVtLCBzcG9rZW4gYWxvdWQKICogICAtIGRvdWJsZSB0YXAgICAtPiBhY3RpdmF0ZSAoY2xpY2sp' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'IHRoZSBjdXJyZW50IGl0ZW0KICoKICogQSBzaG9ydCBzb3VuZCBwbGF5cyBmb3IgZXZlcnkgYWN0' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'aW9uIHRvbyAoZnJvbSB0aGUgc2VsZWN0ZWQgc291bmQKICogc2NoZW1lKSwgYW5kIGlmIHNwZWVj' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'aCBldmVyIGZhaWxzIHRvIGZpcmUsIGFuIGFsZXJ0IHNvdW5kIHBsYXlzIGluc3RlYWQKICogb2Yg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'c3RheWluZyBzaWxlbnQsIHNvIGEgZmFpbHVyZSBpcyBuZXZlciBpbnZpc2libGUuCiAqCiAqIElN' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'UE9SVEFOVCB3aGlsZSB0ZXN0aW5nOiBUYWxrQmFjayBzaG91bGQgYmUgc3dpdGNoZWQgT0ZGIGJl' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'Zm9yZSB0dXJuaW5nCiAqIHRoaXMgc2VydmljZSBvbi4gVHdvIHNlcnZpY2VzIGJvdGggYXNraW5n' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'IGZvciB0b3VjaC1leHBsb3JhdGlvbi9nZXN0dXJlCiAqIGhhbmRsaW5nIGF0IG9uY2UgaXMgZXhh' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'Y3RseSB0aGUgY29uZmxpY3Qgbm90ZWQgd2hpbGUgYnVpbGRpbmcgdGhlCiAqIGNyaWNrZXQgZ2Ft' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZSDigJQgb25seSBvbmUgb2YgdGhlbSBzaG91bGQgb3duIGdlc3R1cmVzIGF0IGEgdGltZS4KICov' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'CmNsYXNzIE15U2NyZWVuUmVhZGVyU2VydmljZSA6IEFjY2Vzc2liaWxpdHlTZXJ2aWNlKCkgewoK' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgIHByaXZhdGUgdmFyIHR0czogVGV4dFRvU3BlZWNoPyA9IG51bGwKICAgIHByaXZhdGUgdmFy' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'IHNvdW5kUG9vbDogU291bmRQb29sPyA9IG51bGwKCiAgICBwcml2YXRlIHZhciBzb3VuZEZvY3Vz' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'OiBJbnQ/ID0gbnVsbAogICAgcHJpdmF0ZSB2YXIgc291bmRBY3RpdmF0ZTogSW50PyA9IG51bGwK' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgIHByaXZhdGUgdmFyIHNvdW5kU2NyZWVuQ2hhbmdlOiBJbnQ/ID0gbnVsbAogICAgcHJpdmF0' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZSB2YXIgc291bmRBbGVydDogSW50PyA9IG51bGwKICAgIHByaXZhdGUgdmFsIGxvYWRlZFNvdW5k' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'SWRzID0gbXV0YWJsZVNldE9mPEludD4oKQoKICAgIHByaXZhdGUgdmFsIG5vZGVMaXN0ID0gbXV0' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'YWJsZUxpc3RPZjxBY2Nlc3NpYmlsaXR5Tm9kZUluZm8+KCkKICAgIHByaXZhdGUgdmFyIGN1cnJl' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'bnRJbmRleCA9IC0xCiAgICBwcml2YXRlIHZhciBmb2N1c2VkTm9kZTogQWNjZXNzaWJpbGl0eU5v' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZGVJbmZvPyA9IG51bGwKCiAgICBwcml2YXRlIHZhbCBzY2hlbWVBc3NldEZvbGRlciA9ICJzb3Vu' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZF9pcGhvbmVfdm9pY2VvdmVyIgoKICAgIG92ZXJyaWRlIGZ1biBvblNlcnZpY2VDb25uZWN0ZWQo' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'KSB7CiAgICAgICAgc3VwZXIub25TZXJ2aWNlQ29ubmVjdGVkKCkKCiAgICAgICAgdmFsIHByZWZz' >>  tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ID0gZ2V0U2hhcmVkUHJlZmVyZW5jZXMoInNjcmVlbl9yZWFkZXJfcHJlZnMiLCBDb250ZXh0Lk1P' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'REVfUFJJVkFURSkKICAgICAgICB2YWwgZW5naW5lUGFja2FnZSA9IHByZWZzLmdldFN0cmluZygi' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'dHRzX2VuZ2luZV9wYWNrYWdlIiwgbnVsbCkKCiAgICAgICAgdmFsIGluaXRMaXN0ZW5lciA9IFRl' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'eHRUb1NwZWVjaC5PbkluaXRMaXN0ZW5lciB7IHN0YXR1cyAtPgogICAgICAgICAgICBpZiAoc3Rh' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'dHVzID09IFRleHRUb1NwZWVjaC5TVUNDRVNTKSB7CiAgICAgICAgICAgICAgICB0dHM/LnNldE9u' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'VXR0ZXJhbmNlUHJvZ3Jlc3NMaXN0ZW5lcihvYmplY3QgOiBVdHRlcmFuY2VQcm9ncmVzc0xpc3Rl' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'bmVyKCkgewogICAgICAgICAgICAgICAgICAgIG92ZXJyaWRlIGZ1biBvblN0YXJ0KHV0dGVyYW5j' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZUlkOiBTdHJpbmc/KSB7fQogICAgICAgICAgICAgICAgICAgIG92ZXJyaWRlIGZ1biBvbkRvbmUo' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'dXR0ZXJhbmNlSWQ6IFN0cmluZz8pIHt9CiAgICAgICAgICAgICAgICAgICAgb3ZlcnJpZGUgZnVu' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'IG9uRXJyb3IodXR0ZXJhbmNlSWQ6IFN0cmluZz8pIHsKICAgICAgICAgICAgICAgICAgICAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'cGxheVNvdW5kKHNvdW5kQWxlcnQpCiAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgfSkKICAgICAgICAgICAgfSBlbHNlIHsKICAgICAgICAgICAgICAgIHBsYXlTb3VuZChzb3Vu' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZEFsZXJ0KQogICAgICAgICAgICB9CiAgICAgICAgfQoKICAgICAgICB0dHMgPSBpZiAoZW5naW5l' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'UGFja2FnZSAhPSBudWxsKSB7CiAgICAgICAgICAgIFRleHRUb1NwZWVjaCh0aGlzLCBpbml0TGlz' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'dGVuZXIsIGVuZ2luZVBhY2thZ2UpCiAgICAgICAgfSBlbHNlIHsKICAgICAgICAgICAgVGV4dFRv' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'U3BlZWNoKHRoaXMsIGluaXRMaXN0ZW5lcikKICAgICAgICB9CgogICAgICAgIHZhbCBhdHRycyA9' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'IEF1ZGlvQXR0cmlidXRlcy5CdWlsZGVyKCkKICAgICAgICAgICAgLnNldFVzYWdlKEF1ZGlvQXR0' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'cmlidXRlcy5VU0FHRV9BU1NJU1RBTkNFX0FDQ0VTU0lCSUxJVFkpCiAgICAgICAgICAgIC5zZXRD' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'b250ZW50VHlwZShBdWRpb0F0dHJpYnV0ZXMuQ09OVEVOVF9UWVBFX1NPTklGSUNBVElPTikKICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgICAgICAgLmJ1aWxkKCkKICAgICAgICBzb3VuZFBvb2wgPSBTb3VuZFBvb2wuQnVpbGRlcigp' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'CiAgICAgICAgICAgIC5zZXRNYXhTdHJlYW1zKDQpCiAgICAgICAgICAgIC5zZXRBdWRpb0F0dHJp' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'YnV0ZXMoYXR0cnMpCiAgICAgICAgICAgIC5idWlsZCgpCiAgICAgICAgc291bmRQb29sPy5zZXRP' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'bkxvYWRDb21wbGV0ZUxpc3RlbmVyIHsgXywgc2FtcGxlSWQsIHN0YXR1cyAtPgogICAgICAgICAg' >>  tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICBpZiAoc3RhdHVzID09IDApIHsKICAgICAgICAgICAgICAgIGxvYWRlZFNvdW5kSWRzLmFkZChz' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'YW1wbGVJZCkKICAgICAgICAgICAgfQogICAgICAgIH0KCiAgICAgICAgc291bmRGb2N1cyA9IGxv' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'YWRTb3VuZCgiZm9jdXMyLm9nZyIpCiAgICAgICAgc291bmRBY3RpdmF0ZSA9IGxvYWRTb3VuZCgi' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'Y2xpY2sub2dnIikKICAgICAgICBzb3VuZFNjcmVlbkNoYW5nZSA9IGxvYWRTb3VuZCgiU2NyZWVu' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'Q2hhbmdlLm9nZyIpCiAgICAgICAgc291bmRBbGVydCA9IGxvYWRTb3VuZCgiQWxlcnQub2dnIikK' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgIH0KCiAgICBwcml2YXRlIGZ1biBsb2FkU291bmQoZmlsZW5hbWU6IFN0cmluZyk6IEludD8g' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ewogICAgICAgIHJldHVybiB0cnkgewogICAgICAgICAgICB2YWwgYWZkID0gYXNzZXRzLm9wZW5G' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZCgiJHNjaGVtZUFzc2V0Rm9sZGVyLyRmaWxlbmFtZSIpCiAgICAgICAgICAgIHZhbCBpZCA9IHNv' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'dW5kUG9vbD8ubG9hZChhZmQsIDEpCiAgICAgICAgICAgIGFmZC5jbG9zZSgpCiAgICAgICAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'IGlkCiAgICAgICAgfSBjYXRjaCAoZTogRXhjZXB0aW9uKSB7CiAgICAgICAgICAgIC8vIFNvdW5k' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'IHNjaGVtZSBmaWxlIG5vdCBidW5kbGVkIGluIHRoaXMgYnVpbGQgeWV0IOKAlCBzdGF5cyBzaWxl' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'bnQKICAgICAgICAgICAgLy8gZm9yIHRoaXMgb25lIGN1ZSByYXRoZXIgdGhhbiBjcmFzaGluZyB0' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'aGUgc2VydmljZS4KICAgICAgICAgICAgbnVsbAogICAgICAgIH0KICAgIH0KCiAgICBwcml2YXRl' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'IGZ1biBwbGF5U291bmQoc291bmRJZDogSW50PykgewogICAgICAgIGlmIChzb3VuZElkICE9IG51' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'bGwgJiYgbG9hZGVkU291bmRJZHMuY29udGFpbnMoc291bmRJZCkpIHsKICAgICAgICAgICAgc291' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'bmRQb29sPy5wbGF5KHNvdW5kSWQsIDFmLCAxZiwgMSwgMCwgMWYpCiAgICAgICAgfQogICAgfQoK' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgIHByaXZhdGUgZnVuIHNwZWFrKHRleHQ6IFN0cmluZykgewogICAgICAgIHZhbCBlbmdpbmUg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'PSB0dHMKICAgICAgICBpZiAoZW5naW5lID09IG51bGwpIHsKICAgICAgICAgICAgcGxheVNvdW5k' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'KHNvdW5kQWxlcnQpCiAgICAgICAgICAgIHJldHVybgogICAgICAgIH0KICAgICAgICB2YWwgdXR0' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZXJhbmNlSWQgPSAidSIgKyBTeXN0ZW0uY3VycmVudFRpbWVNaWxsaXMoKQogICAgICAgIHZhbCBy' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZXN1bHQgPSBlbmdpbmUuc3BlYWsodGV4dCwgVGV4dFRvU3BlZWNoLlFVRVVFX0ZMVVNILCBudWxs' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'LCB1dHRlcmFuY2VJZCkKICAgICAgICBpZiAocmVzdWx0ID09IFRleHRUb1NwZWVjaC5FUlJPUikg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ewogICAgICAgICAgICBwbGF5U291bmQoc291bmRBbGVydCkKICAgICAgICB9CiAgICB9CgogICAg' >>  tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'b3ZlcnJpZGUgZnVuIG9uQWNjZXNzaWJpbGl0eUV2ZW50KGV2ZW50OiBBY2Nlc3NpYmlsaXR5RXZl' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'bnQ/KSB7CiAgICAgICAgZXZlbnQgPzogcmV0dXJuCiAgICAgICAgd2hlbiAoZXZlbnQuZXZlbnRU' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'eXBlKSB7CiAgICAgICAgICAgIEFjY2Vzc2liaWxpdHlFdmVudC5UWVBFX1dJTkRPV19TVEFURV9D' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'SEFOR0VEIC0+IHsKICAgICAgICAgICAgICAgIHJlYnVpbGROb2RlTGlzdCgpCiAgICAgICAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgICBjdXJyZW50SW5kZXggPSAtMQogICAgICAgICAgICAgICAgZm9jdXNlZE5vZGUgPSBudWxs' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'CiAgICAgICAgICAgICAgICBwbGF5U291bmQoc291bmRTY3JlZW5DaGFuZ2UpCiAgICAgICAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgICBzcGVhaygi4KSo4KSIIOCkuOCljeCkleCljeCksOClgOCkqCDgpJbgpYHgpLLgpYAsIOCk' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'huCkl+ClhyDgpKzgpKLgpLzgpKjgpYcg4KSV4KWHIOCksuCkv+CkjyDgpKbgpL7gpIjgpIIg4KST' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo '4KSwIOCkuOCljeCkteCkvuCkh+CkqiDgpJXgpLDgpYfgpIIiKQogICAgICAgICAgICB9CiAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgICAgIEFjY2Vzc2liaWxpdHlFdmVudC5UWVBFX1ZJRVdfSE9WRVJfRU5URVIgLT4gewogICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgICAgICAgICAgaGFuZGxlSG92ZXIoZXZlbnQpCiAgICAgICAgICAgIH0KICAgICAgICB9CiAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICB9CgogICAgLyoqCiAgICAgKiBFeHBsb3JlLWJ5LXRvdWNoOiB3aGVuIGEgZmluZ2VyIGlzIGRy' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'YWdnZWQgKG5vdCBzd2lwZWQpIGRpcmVjdGx5IG9udG8gYQogICAgICogc2NyZWVuIGl0ZW0sIEFu' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZHJvaWQncyB0b3VjaC1leHBsb3JhdGlvbiBsYXllciAoZW5hYmxlZCB2aWEKICAgICAqIGZsYWdS' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZXF1ZXN0VG91Y2hFeHBsb3JhdGlvbk1vZGUgaW4gYWNjZXNzaWJpbGl0eV9zZXJ2aWNlX2NvbmZp' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'Zy54bWwpCiAgICAgKiBhdXRvbWF0aWNhbGx5IGhpdC10ZXN0cyBhbmQgcmVwb3J0cyB0aGUgZXhh' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'Y3QgdmlldyB1bmRlciB0aGUgZmluZ2VyIGFzCiAgICAgKiBhIEhPVkVSX0VOVEVSIGV2ZW50IOKA' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'lCBubyBtYW51YWwgY29vcmRpbmF0ZSBtYXRoIG5lZWRlZCBoZXJlLiBUaGlzIGlzCiAgICAgKiBv' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'biB0b3Agb2YgKG5vdCBpbnN0ZWFkIG9mKSBzd2lwZSBuYXZpZ2F0aW9uIGFuZCBkb3VibGUtdGFw' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'IGFjdGl2YXRpb24uCiAgICAgKi8KICAgIHByaXZhdGUgZnVuIGhhbmRsZUhvdmVyKGV2ZW50OiBB' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'Y2Nlc3NpYmlsaXR5RXZlbnQpIHsKICAgICAgICB2YWwgbm9kZSA9IGV2ZW50LnNvdXJjZSA/OiBy' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZXR1cm4KICAgICAgICB2YWwgaGFzTGFiZWwgPSAhbm9kZS50ZXh0LmlzTnVsbE9yRW1wdHkoKSB8' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'fCAhbm9kZS5jb250ZW50RGVzY3JpcHRpb24uaXNOdWxsT3JFbXB0eSgpCiAgICAgICAgaWYgKCFu' >>  tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'b2RlLmlzVmlzaWJsZVRvVXNlciB8fCAhaGFzTGFiZWwpIHJldHVybgoKICAgICAgICBmb2N1c2Vk' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'Tm9kZSA9IG5vZGUKICAgICAgICAvLyBCZXN0LWVmZm9ydDoga2VlcCBzd2lwZSBuYXZpZ2F0aW9u' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'IHBpY2tpbmcgdXAgZnJvbSBuZWFyIHdoZXJlIHRoZQogICAgICAgIC8vIGZpbmdlciBqdXN0IHdh' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'cywgYnkgbWF0Y2hpbmcgdGhpcyBub2RlIGFnYWluc3QgdGhlIHN3aXBlIGxpc3QuCiAgICAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'dmFsIG1hdGNoSW5kZXggPSBub2RlTGlzdC5pbmRleE9mRmlyc3QgewogICAgICAgICAgICBpdC50' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZXh0ID09IG5vZGUudGV4dCAmJiBpdC5jb250ZW50RGVzY3JpcHRpb24gPT0gbm9kZS5jb250ZW50' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'RGVzY3JpcHRpb24KICAgICAgICB9CiAgICAgICAgaWYgKG1hdGNoSW5kZXggPj0gMCkgY3VycmVu' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'dEluZGV4ID0gbWF0Y2hJbmRleAoKICAgICAgICBub2RlLnBlcmZvcm1BY3Rpb24oQWNjZXNzaWJp' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'bGl0eU5vZGVJbmZvLkFDVElPTl9BQ0NFU1NJQklMSVRZX0ZPQ1VTKQogICAgICAgIHBsYXlTb3Vu' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZChzb3VuZEZvY3VzKQogICAgICAgIHZhbCBsYWJlbCA9IG5vZGUudGV4dD8udG9TdHJpbmcoKT8u' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'dGFrZUlmIHsgaXQuaXNOb3RCbGFuaygpIH0KICAgICAgICAgICAgPzogbm9kZS5jb250ZW50RGVz' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'Y3JpcHRpb24/LnRvU3RyaW5nKCk/LnRha2VJZiB7IGl0LmlzTm90QmxhbmsoKSB9CiAgICAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgID86ICLgpIbgpIfgpJ/gpK4iCiAgICAgICAgc3BlYWsobGFiZWwpCiAgICB9CgogICAgcHJp' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'dmF0ZSBmdW4gcmVidWlsZE5vZGVMaXN0KCkgewogICAgICAgIG5vZGVMaXN0LmNsZWFyKCkKICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgICB2YWwgcm9vdCA9IHJvb3RJbkFjdGl2ZVdpbmRvdyA/OiByZXR1cm4KICAgICAgICBjb2xs' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZWN0Tm9kZXMocm9vdCwgbm9kZUxpc3QpCiAgICB9CgogICAgcHJpdmF0ZSBmdW4gY29sbGVjdE5v' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZGVzKG5vZGU6IEFjY2Vzc2liaWxpdHlOb2RlSW5mbz8sIG91dDogTXV0YWJsZUxpc3Q8QWNjZXNz' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'aWJpbGl0eU5vZGVJbmZvPikgewogICAgICAgIGlmIChub2RlID09IG51bGwpIHJldHVybgogICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgIHZhbCBoYXNMYWJlbCA9ICFub2RlLnRleHQuaXNOdWxsT3JFbXB0eSgpIHx8ICFub2RlLmNv' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'bnRlbnREZXNjcmlwdGlvbi5pc051bGxPckVtcHR5KCkKICAgICAgICBpZiAobm9kZS5pc1Zpc2li' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'bGVUb1VzZXIgJiYgKG5vZGUuaXNDbGlja2FibGUgfHwgaGFzTGFiZWwpKSB7CiAgICAgICAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'IG91dC5hZGQobm9kZSkKICAgICAgICB9CiAgICAgICAgZm9yIChpIGluIDAgdW50aWwgbm9kZS5j' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'aGlsZENvdW50KSB7CiAgICAgICAgICAgIGNvbGxlY3ROb2Rlcyhub2RlLmdldENoaWxkKGkpLCBv' >>  tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'dXQpCiAgICAgICAgfQogICAgfQoKICAgIEBTdXBwcmVzcygiREVQUkVDQVRJT04iKQogICAgb3Zl' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'cnJpZGUgZnVuIG9uR2VzdHVyZShnZXN0dXJlSWQ6IEludCk6IEJvb2xlYW4gewogICAgICAgIHdo' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZW4gKGdlc3R1cmVJZCkgewogICAgICAgICAgICBBY2Nlc3NpYmlsaXR5U2VydmljZS5HRVNUVVJF' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'X1NXSVBFX1JJR0hUIC0+IHsKICAgICAgICAgICAgICAgIG1vdmVOZXh0KCkKICAgICAgICAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgIHJldHVybiB0cnVlCiAgICAgICAgICAgIH0KICAgICAgICAgICAgQWNjZXNzaWJpbGl0eVNl' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'cnZpY2UuR0VTVFVSRV9TV0lQRV9MRUZUIC0+IHsKICAgICAgICAgICAgICAgIG1vdmVQcmV2aW91' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'cygpCiAgICAgICAgICAgICAgICByZXR1cm4gdHJ1ZQogICAgICAgICAgICB9CiAgICAgICAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'IEFjY2Vzc2liaWxpdHlTZXJ2aWNlLkdFU1RVUkVfRE9VQkxFX1RBUCAtPiB7CiAgICAgICAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgICBhY3RpdmF0ZUN1cnJlbnQoKQogICAgICAgICAgICAgICAgcmV0dXJuIHRydWUKICAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgICAgfQogICAgICAgIH0KICAgICAgICByZXR1cm4gc3VwZXIub25HZXN0dXJlKGdlc3R1cmVJ' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZCkKICAgIH0KCiAgICBwcml2YXRlIGZ1biBtb3ZlTmV4dCgpIHsKICAgICAgICBpZiAobm9kZUxp' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'c3QuaXNFbXB0eSgpKSB7CiAgICAgICAgICAgIHBsYXlTb3VuZChzb3VuZEFsZXJ0KQogICAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgICBzcGVhaygi4KSH4KS4IOCkuOCljeCkleCljeCksOClgOCkqCDgpKrgpLAg4KSV4KWL4KSI' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'IOCkhuCkh+Ckn+CkriDgpKjgpLngpYDgpIIg4KSu4KS/4KSy4KS+IikKICAgICAgICAgICAgcmV0' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'dXJuCiAgICAgICAgfQogICAgICAgIGN1cnJlbnRJbmRleCA9IGlmIChjdXJyZW50SW5kZXggKyAx' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'IDwgbm9kZUxpc3Quc2l6ZSkgY3VycmVudEluZGV4ICsgMSBlbHNlIDAKICAgICAgICBhbm5vdW5j' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZUN1cnJlbnQoKQogICAgfQoKICAgIHByaXZhdGUgZnVuIG1vdmVQcmV2aW91cygpIHsKICAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICBpZiAobm9kZUxpc3QuaXNFbXB0eSgpKSB7CiAgICAgICAgICAgIHBsYXlTb3VuZChzb3VuZEFs' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZXJ0KQogICAgICAgICAgICBzcGVhaygi4KSH4KS4IOCkuOCljeCkleCljeCksOClgOCkqCDgpKrg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'pLAg4KSV4KWL4KSIIOCkhuCkh+Ckn+CkriDgpKjgpLngpYDgpIIg4KSu4KS/4KSy4KS+IikKICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgICAgICAgcmV0dXJuCiAgICAgICAgfQogICAgICAgIGN1cnJlbnRJbmRleCA9IGlmIChjdXJy' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZW50SW5kZXggLSAxID49IDApIGN1cnJlbnRJbmRleCAtIDEgZWxzZSBub2RlTGlzdC5zaXplIC0g' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'MQogICAgICAgIGFubm91bmNlQ3VycmVudCgpCiAgICB9CgogICAgcHJpdmF0ZSBmdW4gYW5ub3Vu' >>  tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'Y2VDdXJyZW50KCkgewogICAgICAgIHZhbCBub2RlID0gbm9kZUxpc3QuZ2V0T3JOdWxsKGN1cnJl' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'bnRJbmRleCkgPzogcmV0dXJuCiAgICAgICAgZm9jdXNlZE5vZGUgPSBub2RlCiAgICAgICAgbm9k' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZS5wZXJmb3JtQWN0aW9uKEFjY2Vzc2liaWxpdHlOb2RlSW5mby5BQ1RJT05fQUNDRVNTSUJJTElU' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'WV9GT0NVUykKICAgICAgICBwbGF5U291bmQoc291bmRGb2N1cykKICAgICAgICB2YWwgbGFiZWwg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'PSBub2RlLnRleHQ/LnRvU3RyaW5nKCk/LnRha2VJZiB7IGl0LmlzTm90QmxhbmsoKSB9CiAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgICAgID86IG5vZGUuY29udGVudERlc2NyaXB0aW9uPy50b1N0cmluZygpPy50YWtlSWYgeyBp' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'dC5pc05vdEJsYW5rKCkgfQogICAgICAgICAgICA/OiAi4KSG4KSH4KSf4KSuIgogICAgICAgIHNw' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZWFrKGxhYmVsKQogICAgfQoKICAgIHByaXZhdGUgZnVuIGFjdGl2YXRlQ3VycmVudCgpIHsKICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgICB2YWwgbm9kZSA9IGZvY3VzZWROb2RlID86IG5vZGVMaXN0LmdldE9yTnVsbChjdXJyZW50' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'SW5kZXgpCiAgICAgICAgaWYgKG5vZGUgPT0gbnVsbCkgewogICAgICAgICAgICBwbGF5U291bmQo' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'c291bmRBbGVydCkKICAgICAgICAgICAgc3BlYWsoIuCkquCkueCksuClhyDgpJXgpL/gpLjgpYAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo '4KSG4KSH4KSf4KSuIOCkquCksCDgpLjgpY3gpLXgpL7gpIfgpKog4KSV4KSw4KSV4KWHIOCkr+Ck' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'viDgpJvgpYLgpJXgpLAg4KSq4KS54KWB4KSC4KSa4KWH4KSCIikKICAgICAgICAgICAgcmV0dXJu' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'CiAgICAgICAgfQogICAgICAgIHZhbCBkaWRDbGljayA9IG5vZGUucGVyZm9ybUFjdGlvbihBY2Nl' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'c3NpYmlsaXR5Tm9kZUluZm8uQUNUSU9OX0NMSUNLKQogICAgICAgIGlmIChkaWRDbGljaykgewog' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgICAgICAgICBwbGF5U291bmQoc291bmRBY3RpdmF0ZSkKICAgICAgICB9IGVsc2UgewogICAg' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ICAgICAgICBwbGF5U291bmQoc291bmRBbGVydCkKICAgICAgICB9CiAgICB9CgogICAgb3ZlcnJp' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'ZGUgZnVuIG9uSW50ZXJydXB0KCkgewogICAgICAgIC8vIFJlcXVpcmVkIG92ZXJyaWRlIOKAlCBu' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'b3RoaW5nIHRvIGNsZWFuIHVwIG1pZC1pbnRlcnJ1cHQgZm9yIHYxLgogICAgfQoKICAgIG92ZXJy' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'aWRlIGZ1biBvbkRlc3Ryb3koKSB7CiAgICAgICAgdHRzPy5zaHV0ZG93bigpCiAgICAgICAgc291' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          echo 'bmRQb29sPy5yZWxlYXNlKCkKICAgICAgICBzdXBlci5vbkRlc3Ryb3koKQogICAgfQp9Cg==' >> tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+          base64 -d tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64 > 'app/src/main/java/com/mohit/screenreader/MyScreenReaderService.kt'
+          rm -f tmp_app_src_main_java_com_mohit_screenreader_MyScreenReaderService_kt.b64
+      - name: Write  app/src/main/java/com/mohit/screenreader/SoundSchemeActivity.kt
+        run: |
+          mkdir -p "$(dirname 'app/src/main/java/com/mohit/screenreader/SoundSchemeActivity.kt')"
+          rm -f tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'cGFja2FnZSBjb20ubW9oaXQuc2NyZWVucmVhZGVyCgppbXBvcnQgYW5kcm9pZC5jb250ZW50LkNv' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'bnRleHQKaW1wb3J0IGFuZHJvaWQubWVkaWEuTWVkaWFQbGF5ZXIKaW1wb3J0IGFuZHJvaWQub3Mu' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'QnVuZGxlCmltcG9ydCBhbmRyb2lkLnNwZWVjaC50dHMuVGV4dFRvU3BlZWNoCmltcG9ydCBhbmRy' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'b2lkLndpZGdldC5CdXR0b24KaW1wb3J0IGFuZHJvaWQud2lkZ2V0LlRvYXN0CgpjbGFzcyBTb3Vu' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'ZFNjaGVtZUFjdGl2aXR5IDogYW5kcm9pZC5hcHAuQWN0aXZpdHkoKSB7CgogICAgcHJpdmF0ZSB2' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'YXIgdHRzOiBUZXh0VG9TcGVlY2g/ID0gbnVsbAogICAgcHJpdmF0ZSB2YXIgcHJldmlld1BsYXll' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'cjogTWVkaWFQbGF5ZXI/ID0gbnVsbAoKICAgIC8vIEZvbGRlciBuYW1lIGluc2lkZSBhcHAvc3Jj' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'L21haW4vYXNzZXRzLyB3aGVyZSB0aGUgYnVpbGQgd29ya2Zsb3cgdW5wYWNrcwogICAgLy8gSVBo' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'b25lX3ZvaWNlX092ZXIuemlwLiBPbmx5IG9uZSBzY2hlbWUgZXhpc3RzIHJpZ2h0IG5vdywgc28g' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'aXQgaXMgdGhlCiAgICAvLyBkZWZhdWx0OyBtb3JlIHNjaGVtZXMgKGFuZCB0aGlzIHBpY2tlciBi' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'ZWNvbWluZyBhIHJlYWwgbGlzdCkgY29tZSBsYXRlci4KICAgIHByaXZhdGUgdmFsIHNjaGVtZUlk' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'ID0gImlwaG9uZV92b2ljZW92ZXIiCiAgICBwcml2YXRlIHZhbCBzY2hlbWVBc3NldEZvbGRlciA9' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'ICJzb3VuZF9pcGhvbmVfdm9pY2VvdmVyIgogICAgcHJpdmF0ZSB2YWwgcHJldmlld0ZpbGUgPSAi' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'Y2xpY2sub2dnIgoKICAgIG92ZXJyaWRlIGZ1biBvbkNyZWF0ZShzYXZlZEluc3RhbmNlU3RhdGU6' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'IEJ1bmRsZT8pIHsKICAgICAgICBzdXBlci5vbkNyZWF0ZShzYXZlZEluc3RhbmNlU3RhdGUpCiAg' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'ICAgICAgc2V0Q29udGVudFZpZXcoUi5sYXlvdXQuYWN0aXZpdHlfc291bmRfc2NoZW1lKQoKICAg' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'ICAgICB0dHMgPSBUZXh0VG9TcGVlY2godGhpcykgeyB9CgogICAgICAgIC8vIFRoZSBzY2hlbWUg' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'aXMgYWxyZWFkeSB0aGUgc2F2ZWQgZGVmYXVsdCwgYnV0IHRhcHBpbmcgc3RpbGwgY29uZmlybXMK' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'ICAgICAgICAvLyBpdCBvdXQgbG91ZCBhbmQgbGV0cyBoaW0gcHJldmlldyBvbmUgc291bmQgZnJv' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'bSBpdC4KICAgICAgICBmaW5kVmlld0J5SWQ8QnV0dG9uPihSLmlkLmJ0blNjaGVtZUlwaG9uZSku' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'c2V0T25DbGlja0xpc3RlbmVyIHsKICAgICAgICAgICAgc2F2ZUNob3NlblNjaGVtZSgpCiAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'ICAgICAgIHNwZWFrKCJpUGhvbmUgVm9pY2VPdmVyIOCkp+CljeCkteCkqOCkvyDgpK/gpYvgpJzg' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo  'pKjgpL4g4KSa4KWB4KSo4KWAIOCkl+CkiCIpCiAgICAgICAgICAgIHBsYXlQcmV2aWV3KCkKICAg' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'ICAgICB9CgogICAgICAgIHNhdmVDaG9zZW5TY2hlbWUoKQogICAgfQoKICAgIHByaXZhdGUgZnVu' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'IHNhdmVDaG9zZW5TY2hlbWUoKSB7CiAgICAgICAgZ2V0U2hhcmVkUHJlZmVyZW5jZXMoInNjcmVl' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'bl9yZWFkZXJfcHJlZnMiLCBDb250ZXh0Lk1PREVfUFJJVkFURSkKICAgICAgICAgICAgLmVkaXQo' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'KQogICAgICAgICAgICAucHV0U3RyaW5nKCJzb3VuZF9zY2hlbWUiLCBzY2hlbWVJZCkKICAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'ICAgICAgLmFwcGx5KCkKICAgIH0KCiAgICBwcml2YXRlIGZ1biBzcGVhayh0ZXh0OiBTdHJpbmcp' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'IHsKICAgICAgICB0dHM/LnNwZWFrKHRleHQsIFRleHRUb1NwZWVjaC5RVUVVRV9GTFVTSCwgbnVs' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'bCwgInNvdW5kX3NjaGVtZV9jb25maXJtIikKICAgIH0KCiAgICBwcml2YXRlIGZ1biBwbGF5UHJl' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'dmlldygpIHsKICAgICAgICB0cnkgewogICAgICAgICAgICBwcmV2aWV3UGxheWVyPy5yZWxlYXNl' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'KCkKICAgICAgICAgICAgdmFsIGFmZCA9IGFzc2V0cy5vcGVuRmQoIiRzY2hlbWVBc3NldEZvbGRl' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'ci8kcHJldmlld0ZpbGUiKQogICAgICAgICAgICBwcmV2aWV3UGxheWVyID0gTWVkaWFQbGF5ZXIo' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'KS5hcHBseSB7CiAgICAgICAgICAgICAgICBzZXREYXRhU291cmNlKGFmZC5maWxlRGVzY3JpcHRv' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'ciwgYWZkLnN0YXJ0T2Zmc2V0LCBhZmQubGVuZ3RoKQogICAgICAgICAgICAgICAgYWZkLmNsb3Nl' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'KCkKICAgICAgICAgICAgICAgIHByZXBhcmUoKQogICAgICAgICAgICAgICAgc3RhcnQoKQogICAg' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'ICAgICAgICB9CiAgICAgICAgfSBjYXRjaCAoZTogRXhjZXB0aW9uKSB7CiAgICAgICAgICAgIC8v' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'IFNvdW5kIGZpbGUgbm90IGZvdW5kIGluIHRoaXMgYnVpbGQgeWV0IChlLmcuIHRoZSB6aXAgd2Fz' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'IG5vdAogICAgICAgICAgICAvLyB1bnBhY2tlZCkg4oCUIHNheSBzbyBvdXQgbG91ZCwgc2luY2Ug' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'YSBUb2FzdCBhbG9uZSBjYW4gYmUgbWlzc2VkLgogICAgICAgICAgICBzcGVhaygi4KSo4KSu4KWC' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo '4KSo4KS+IOCkp+CljeCkteCkqOCkvyDgpKvgpLzgpL7gpIfgpLIg4KSo4KS54KWA4KSCIOCkruCk' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'v+CksuClgOClpCDgpKzgpL/gpLLgpY3gpKEg4KSu4KWH4KSCIOCkuOCkvuCkieCkguCkoSDgpLjg' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'pY3gpJXgpYDgpK4g4KSg4KWA4KSVIOCkuOClhyDgpKjgpLngpYDgpIIg4KSc4KWB4KSh4KS84KWA' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo '4KWkIikKICAgICAgICAgICAgVG9hc3QubWFrZVRleHQodGhpcywgIuCkqOCkruClguCkqOCkviDg' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'pKfgpY3gpLXgpKjgpL8g4KSr4KS84KS+4KSH4KSyIOCkqOCkueClgOCkgiDgpK7gpL/gpLLgpYAi' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'LCBUb2FzdC5MRU5HVEhfU0hPUlQpLnNob3coKQogICAgICAgIH0KICAgIH0KCiAgICBvdmVycmlk' >>  tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'ZSBmdW4gb25EZXN0cm95KCkgewogICAgICAgIHR0cz8uc2h1dGRvd24oKQogICAgICAgIHByZXZp' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          echo 'ZXdQbGF5ZXI/LnJlbGVhc2UoKQogICAgICAgIHN1cGVyLm9uRGVzdHJveSgpCiAgICB9Cn0K' >> tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+          base64 -d tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64 > 'app/src/main/java/com/mohit/screenreader/SoundSchemeActivity.kt'
+          rm -f tmp_app_src_main_java_com_mohit_screenreader_SoundSchemeActivity_kt.b64
+      - name: Write app/src/main/java/com/mohit/screenreader/TtsEngineActivity.kt
+        run: |
+          mkdir -p "$(dirname 'app/src/main/java/com/mohit/screenreader/TtsEngineActivity.kt')"
+          rm -f tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'cGFja2FnZSBjb20ubW9oaXQuc2NyZWVucmVhZGVyCgppbXBvcnQgYW5kcm9pZC5jb250ZW50LkNv' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'bnRleHQKaW1wb3J0IGFuZHJvaWQub3MuQnVuZGxlCmltcG9ydCBhbmRyb2lkLnNwZWVjaC50dHMu' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'VGV4dFRvU3BlZWNoCmltcG9ydCBhbmRyb2lkLndpZGdldC5BcnJheUFkYXB0ZXIKaW1wb3J0IGFu' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'ZHJvaWQud2lkZ2V0Lkxpc3RWaWV3CmltcG9ydCBhbmRyb2lkLndpZGdldC5UZXh0VmlldwppbXBv' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'cnQgYW5kcm9pZC53aWRnZXQuVG9hc3QKCmNsYXNzIFR0c0VuZ2luZUFjdGl2aXR5IDogYW5kcm9p' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'ZC5hcHAuQWN0aXZpdHkoKSB7CgogICAgcHJpdmF0ZSB2YXIgcHJvYmVUdHM6IFRleHRUb1NwZWVj' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'aD8gPSBudWxsCiAgICBwcml2YXRlIHZhciB0ZXN0VHRzOiBUZXh0VG9TcGVlY2g/ID0gbnVsbAog' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'ICAgcHJpdmF0ZSBsYXRlaW5pdCB2YXIgdHh0U3RhdHVzOiBUZXh0VmlldwoKICAgIG92ZXJyaWRl' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'IGZ1biBvbkNyZWF0ZShzYXZlZEluc3RhbmNlU3RhdGU6IEJ1bmRsZT8pIHsKICAgICAgICBzdXBl' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'ci5vbkNyZWF0ZShzYXZlZEluc3RhbmNlU3RhdGUpCiAgICAgICAgc2V0Q29udGVudFZpZXcoUi5s' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'YXlvdXQuYWN0aXZpdHlfdHRzX2VuZ2luZSkKICAgICAgICB0eHRTdGF0dXMgPSBmaW5kVmlld0J5' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'SWQoUi5pZC50eHRTdGF0dXMpCgogICAgICAgIC8vIEEgdGhyb3dhd2F5IFRleHRUb1NwZWVjaCBp' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'bnN0YW5jZSBqdXN0IHNvIHdlIGNhbiBhc2sgaXQgd2hpY2ggZW5naW5lcwogICAgICAgIC8vIGV4' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'aXN0IG9uIHRoaXMgZGV2aWNlLiBBbmRyb2lkIDExKyAoaW5jbHVkaW5nIEFuZHJvaWQgMTMpIG9u' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'bHkgc2hvd3MKICAgICAgICAvLyBlbmdpbmVzIGJleW9uZCBHb29nbGUncyBpZiB0aGlzIGFwcCBk' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'ZWNsYXJlcyB0aGUgVFRTX1NFUlZJQ0UgPHF1ZXJpZXM+CiAgICAgICAgLy8gZW50cnkgaW4gQW5k' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'cm9pZE1hbmlmZXN0LnhtbCDigJQgdGhhdCBlbnRyeSBpcyBhbHJlYWR5IGluIHBsYWNlLgogICAg' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'ICAgIHByb2JlVHRzID0gVGV4dFRvU3BlZWNoKHRoaXMpIHsgfQogICAgICAgIHByb2JlVHRzPy5s' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo  'ZXQgeyBzaG93RW5naW5lcyhpdCkgfQogICAgfQoKICAgIHByaXZhdGUgZnVuIHNob3dFbmdpbmVz' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'KHR0czogVGV4dFRvU3BlZWNoKSB7CiAgICAgICAgdmFsIGVuZ2luZXMgPSB0dHMuZW5naW5lcwog' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'ICAgICAgIGlmIChlbmdpbmVzLmlzTnVsbE9yRW1wdHkoKSkgewogICAgICAgICAgICB0eHRTdGF0' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'dXMudGV4dCA9ICLgpJXgpYvgpIgg4KSf4KWH4KSV4KWN4KS44KWN4KSfIOCkn+ClgiDgpLjgpY3g' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'pKrgpYDgpJog4KSH4KSC4KSc4KSoIOCkqOCkueClgOCkgiDgpK7gpL/gpLLgpL7gpaQiCiAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'ICAgICAgIHJldHVybgogICAgICAgIH0KCiAgICAgICAgdmFsIGxhYmVscyA9IGVuZ2luZXMubWFw' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'IHsgaXQubGFiZWwgfQogICAgICAgIHR4dFN0YXR1cy50ZXh0ID0gIuCkj+CklSDgpIfgpILgpJzg' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'pKgg4KSa4KWB4KSo4KSo4KWHIOCkleClhyDgpLLgpL/gpI8g4KSJ4KS4IOCkquCksCDgpJ/gpYjg' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'pKog4KSV4KSw4KWH4KSCICjgpJXgpYHgpLIgIiArIGVuZ2luZXMuc2l6ZSArICIpOiIKCiAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'ICAgdmFsIGxpc3RWaWV3ID0gZmluZFZpZXdCeUlkPExpc3RWaWV3PihSLmlkLmxpc3RFbmdpbmVz' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'KQogICAgICAgIGxpc3RWaWV3LmFkYXB0ZXIgPSBBcnJheUFkYXB0ZXIodGhpcywgYW5kcm9pZC5S' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'LmxheW91dC5zaW1wbGVfbGlzdF9pdGVtXzEsIGxhYmVscykKICAgICAgICBsaXN0Vmlldy5zZXRP' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'bkl0ZW1DbGlja0xpc3RlbmVyIHsgXywgXywgcG9zaXRpb24sIF8gLT4KICAgICAgICAgICAgdmFs' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'IGNob3NlbiA9IGVuZ2luZXNbcG9zaXRpb25dCiAgICAgICAgICAgIHNhdmVDaG9zZW5FbmdpbmUo' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'Y2hvc2VuLm5hbWUpCiAgICAgICAgICAgIHRlc3RFbmdpbmUoY2hvc2VuLm5hbWUsIGNob3Nlbi5s' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'YWJlbCkKICAgICAgICB9CiAgICB9CgogICAgcHJpdmF0ZSBmdW4gc2F2ZUNob3NlbkVuZ2luZShl' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'bmdpbmVQYWNrYWdlOiBTdHJpbmcpIHsKICAgICAgICBnZXRTaGFyZWRQcmVmZXJlbmNlcygic2Ny' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'ZWVuX3JlYWRlcl9wcmVmcyIsIENvbnRleHQuTU9ERV9QUklWQVRFKQogICAgICAgICAgICAuZWRp' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'dCgpCiAgICAgICAgICAgIC5wdXRTdHJpbmcoInR0c19lbmdpbmVfcGFja2FnZSIsIGVuZ2luZVBh' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'Y2thZ2UpCiAgICAgICAgICAgIC5hcHBseSgpCiAgICB9CgogICAgcHJpdmF0ZSBmdW4gdGVzdEVu' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'Z2luZShlbmdpbmVQYWNrYWdlOiBTdHJpbmcsIGxhYmVsOiBTdHJpbmcpIHsKICAgICAgICB0ZXN0' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'VHRzPy5zaHV0ZG93bigpCiAgICAgICAgdGVzdFR0cyA9IFRleHRUb1NwZWVjaCh0aGlzLCB7IHN0' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'YXR1cyAtPgogICAgICAgICAgICBpZiAoc3RhdHVzID09IFRleHRUb1NwZWVjaC5TVUNDRVNTKSB7' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'CiAgICAgICAgICAgICAgICB0ZXN0VHRzPy5zcGVhaygKICAgICAgICAgICAgICAgICAgICAiJGxh' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+           echo 'YmVsIOCkmuClgeCkqOCkviDgpJfgpK/gpL7gpaQg4KSv4KS5IOCkh+CkguCknOCkqCDgpIXgpKwg' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo '4KSG4KSq4KSV4KWHIOCkuOCljeCkleCljeCksOClgOCkqCDgpLDgpYDgpKHgpLAg4KSu4KWH4KSC' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'IOCkieCkquCkr+Cli+CklyDgpLngpYvgpJfgpL7gpaQiLAogICAgICAgICAgICAgICAgICAgIFRl' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'eHRUb1NwZWVjaC5RVUVVRV9GTFVTSCwKICAgICAgICAgICAgICAgICAgICBudWxsLAogICAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'ICAgICAgICAgICAgICJ0dHNfZW5naW5lX3Rlc3QiCiAgICAgICAgICAgICAgICApCiAgICAgICAg' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'ICAgICAgICBUb2FzdC5tYWtlVGV4dCh0aGlzLCAiJGxhYmVsIOCkmuClgeCkqOCkviDgpJfgpK/g' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'pL4iLCBUb2FzdC5MRU5HVEhfU0hPUlQpLnNob3coKQogICAgICAgICAgICB9IGVsc2UgewogICAg' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'ICAgICAgICAgICAgVG9hc3QubWFrZVRleHQodGhpcywgIuCkr+CkuSDgpIfgpILgpJzgpKgg4KS2' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo '4KWB4KSw4KWCIOCkqOCkueClgOCkgiDgpLngpYsg4KS44KSV4KS+LCDgpJXgpYPgpKrgpK/gpL4g' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo '4KSm4KWC4KS44KSw4KS+IOCkhuCknOCkvOCkruCkvuCkj+CkgiIsIFRvYXN0LkxFTkdUSF9MT05H' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'KS5zaG93KCkKICAgICAgICAgICAgfQogICAgICAgIH0sIGVuZ2luZVBhY2thZ2UpCiAgICB9Cgog' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'ICAgb3ZlcnJpZGUgZnVuIG9uRGVzdHJveSgpIHsKICAgICAgICBwcm9iZVR0cz8uc2h1dGRvd24o' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'KQogICAgICAgIHRlc3RUdHM/LnNodXRkb3duKCkKICAgICAgICBzdXBlci5vbkRlc3Ryb3koKQog' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          echo 'ICAgfQp9Cg==' >> tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+          base64 -d tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64 > 'app/src/main/java/com/mohit/screenreader/TtsEngineActivity.kt'
+          rm -f tmp_app_src_main_java_com_mohit_screenreader_TtsEngineActivity_kt.b64
+      - name: Write app/src/main/res/layout/activity_main.xml
+        run: |
+          mkdir -p "$(dirname 'app/src/main/res/layout/activity_main.xml')"
+          rm -f tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPExpbmVhckxheW91dCB4bWxu' >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'czphbmRyb2lkPSJodHRwOi8vc2NoZW1hcy5hbmRyb2lkLmNvbS9hcGsvcmVzL2FuZHJvaWQiCiAg' >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'ICBhbmRyb2lkOmxheW91dF93aWR0aD0ibWF0Y2hfcGFyZW50IgogICAgYW5kcm9pZDpsYXlvdXRf' >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'aGVpZ2h0PSJtYXRjaF9wYXJlbnQiCiAgICBhbmRyb2lkOm9yaWVudGF0aW9uPSJ2ZXJ0aWNhbCIK' >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'ICAgIGFuZHJvaWQ6cGFkZGluZz0iMjRkcCI+CgogICAgPFRleHRWaWV3CiAgICAgICAgYW5kcm9p' >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'ZDpsYXlvdXRfd2lkdGg9IndyYXBfY29udGVudCIKICAgICAgICBhbmRyb2lkOmxheW91dF9oZWln' >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'aHQ9IndyYXBfY29udGVudCIKICAgICAgICBhbmRyb2lkOnRleHQ9IkBzdHJpbmcvYXBwX25hbWUi' >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'CiAgICAgICAgYW5kcm9pZDp0ZXh0U2l6ZT0iMjZzcCIKICAgICAgICBhbmRyb2lkOmxheW91dF9t' >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'YXJnaW5Cb3R0b209IjI0ZHAiIC8+CgogICAgPEJ1dHRvbgogICAgICAgIGFuZHJvaWQ6aWQ9IkAr'  >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'aWQvYnRuVHRzIgogICAgICAgIGFuZHJvaWQ6bGF5b3V0X3dpZHRoPSJtYXRjaF9wYXJlbnQiCiAg' >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'ICAgICAgYW5kcm9pZDpsYXlvdXRfaGVpZ2h0PSJ3cmFwX2NvbnRlbnQiCiAgICAgICAgYW5kcm9p' >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'ZDpsYXlvdXRfbWFyZ2luQm90dG9tPSIxNmRwIgogICAgICAgIGFuZHJvaWQ6dGV4dFNpemU9IjIw' >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'c3AiCiAgICAgICAgYW5kcm9pZDp0ZXh0PSJAc3RyaW5nL3R0c19idXR0b24iIC8+CgogICAgPEJ1' >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'dHRvbgogICAgICAgIGFuZHJvaWQ6aWQ9IkAraWQvYnRuU291bmQiCiAgICAgICAgYW5kcm9pZDps' >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'YXlvdXRfd2lkdGg9Im1hdGNoX3BhcmVudCIKICAgICAgICBhbmRyb2lkOmxheW91dF9oZWlnaHQ9' >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'IndyYXBfY29udGVudCIKICAgICAgICBhbmRyb2lkOmxheW91dF9tYXJnaW5Cb3R0b209IjE2ZHAi' >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'CiAgICAgICAgYW5kcm9pZDp0ZXh0U2l6ZT0iMjBzcCIKICAgICAgICBhbmRyb2lkOnRleHQ9IkBz' >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'dHJpbmcvc291bmRfYnV0dG9uIiAvPgoKICAgIDxCdXR0b24KICAgICAgICBhbmRyb2lkOmlkPSJA' >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'K2lkL2J0blNldHRpbmdzIgogICAgICAgIGFuZHJvaWQ6bGF5b3V0X3dpZHRoPSJtYXRjaF9wYXJl' >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'bnQiCiAgICAgICAgYW5kcm9pZDpsYXlvdXRfaGVpZ2h0PSJ3cmFwX2NvbnRlbnQiCiAgICAgICAg' >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'YW5kcm9pZDp0ZXh0U2l6ZT0iMjBzcCIKICAgICAgICBhbmRyb2lkOnRleHQ9IkBzdHJpbmcvc2V0' >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          echo 'dGluZ3NfYnV0dG9uIiAvPgoKPC9MaW5lYXJMYXlvdXQ+Cg==' >> tmp_app_src_main_res_layout_activity_main_xml.b64
+          base64 -d tmp_app_src_main_res_layout_activity_main_xml.b64 > 'app/src/main/res/layout/activity_main.xml'
+          rm -f tmp_app_src_main_res_layout_activity_main_xml.b64
+      - name: Write app/src/main/res/layout/activity_sound_scheme.xml
+        run: |
+          mkdir -p "$(dirname 'app/src/main/res/layout/activity_sound_scheme.xml')"
+          rm -f tmp_app_src_main_res_layout_activity_sound_scheme_xml.b64
+          echo 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPExpbmVhckxheW91dCB4bWxu' >> tmp_app_src_main_res_layout_activity_sound_scheme_xml.b64
+          echo 'czphbmRyb2lkPSJodHRwOi8vc2NoZW1hcy5hbmRyb2lkLmNvbS9hcGsvcmVzL2FuZHJvaWQiCiAg' >> tmp_app_src_main_res_layout_activity_sound_scheme_xml.b64
+          echo 'ICBhbmRyb2lkOmxheW91dF93aWR0aD0ibWF0Y2hfcGFyZW50IgogICAgYW5kcm9pZDpsYXlvdXRf' >> tmp_app_src_main_res_layout_activity_sound_scheme_xml.b64
+          echo 'aGVpZ2h0PSJtYXRjaF9wYXJlbnQiCiAgICBhbmRyb2lkOm9yaWVudGF0aW9uPSJ2ZXJ0aWNhbCIK' >> tmp_app_src_main_res_layout_activity_sound_scheme_xml.b64
+          echo 'ICAgIGFuZHJvaWQ6cGFkZGluZz0iMTZkcCI+CgogICAgPFRleHRWaWV3CiAgICAgICAgYW5kcm9p' >> tmp_app_src_main_res_layout_activity_sound_scheme_xml.b64
+          echo 'ZDpsYXlvdXRfd2lkdGg9Im1hdGNoX3BhcmVudCIKICAgICAgICBhbmRyb2lkOmxheW91dF9oZWln' >> tmp_app_src_main_res_layout_activity_sound_scheme_xml.b64
+          echo 'aHQ9IndyYXBfY29udGVudCIKICAgICAgICBhbmRyb2lkOnRleHRTaXplPSIxOHNwIgogICAgICAg' >> tmp_app_src_main_res_layout_activity_sound_scheme_xml.b64
+          echo 'IGFuZHJvaWQ6cGFkZGluZ0JvdHRvbT0iMTZkcCIKICAgICAgICBhbmRyb2lkOnRleHQ9IuCkheCk' >> tmp_app_src_main_res_layout_activity_sound_scheme_xml.b64
+          echo 'reClgCDgpIngpKrgpLLgpKzgpY3gpKcg4KS44KS+4KSJ4KSC4KShIOCkuOCljeCkleClgOCkrjoi' >> tmp_app_src_main_res_layout_activity_sound_scheme_xml.b64
+          echo 'IC8+CgogICAgPEJ1dHRvbgogICAgICAgIGFuZHJvaWQ6aWQ9IkAraWQvYnRuU2NoZW1lSXBob25l' >> tmp_app_src_main_res_layout_activity_sound_scheme_xml.b64
+          echo  'IgogICAgICAgIGFuZHJvaWQ6bGF5b3V0X3dpZHRoPSJtYXRjaF9wYXJlbnQiCiAgICAgICAgYW5k' >> tmp_app_src_main_res_layout_activity_sound_scheme_xml.b64
+          echo 'cm9pZDpsYXlvdXRfaGVpZ2h0PSJ3cmFwX2NvbnRlbnQiCiAgICAgICAgYW5kcm9pZDp0ZXh0U2l6' >> tmp_app_src_main_res_layout_activity_sound_scheme_xml.b64
+          echo 'ZT0iMjBzcCIKICAgICAgICBhbmRyb2lkOnRleHQ9ImlQaG9uZSBWb2ljZU92ZXIg4KSn4KWN4KS1' >> tmp_app_src_main_res_layout_activity_sound_scheme_xml.b64
+          echo '4KSo4KS/IOCkr+Cli+CknOCkqOCkviAo4KSh4KS/4KSr4KS84KWJ4KSy4KWN4KSfLCDgpJrgpK/g' >> tmp_app_src_main_res_layout_activity_sound_scheme_xml.b64
+          echo 'pKjgpL/gpKQpIiAvPgoKPC9MaW5lYXJMYXlvdXQ+Cg==' >> tmp_app_src_main_res_layout_activity_sound_scheme_xml.b64
+          base64 -d tmp_app_src_main_res_layout_activity_sound_scheme_xml.b64 > 'app/src/main/res/layout/activity_sound_scheme.xml'
+          rm -f tmp_app_src_main_res_layout_activity_sound_scheme_xml.b64
+      - name: Write app/src/main/res/layout/activity_tts_engine.xml
+        run: |
+          mkdir -p "$(dirname 'app/src/main/res/layout/activity_tts_engine.xml')"
+          rm -f tmp_app_src_main_res_layout_activity_tts_engine_xml.b64
+          echo 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPExpbmVhckxheW91dCB4bWxu' >> tmp_app_src_main_res_layout_activity_tts_engine_xml.b64
+          echo 'czphbmRyb2lkPSJodHRwOi8vc2NoZW1hcy5hbmRyb2lkLmNvbS9hcGsvcmVzL2FuZHJvaWQiCiAg' >> tmp_app_src_main_res_layout_activity_tts_engine_xml.b64
+          echo 'ICBhbmRyb2lkOmxheW91dF93aWR0aD0ibWF0Y2hfcGFyZW50IgogICAgYW5kcm9pZDpsYXlvdXRf' >> tmp_app_src_main_res_layout_activity_tts_engine_xml.b64
+          echo 'aGVpZ2h0PSJtYXRjaF9wYXJlbnQiCiAgICBhbmRyb2lkOm9yaWVudGF0aW9uPSJ2ZXJ0aWNhbCIK' >> tmp_app_src_main_res_layout_activity_tts_engine_xml.b64
+          echo 'ICAgIGFuZHJvaWQ6cGFkZGluZz0iMTZkcCI+CgogICAgPFRleHRWaWV3CiAgICAgICAgYW5kcm9p' >> tmp_app_src_main_res_layout_activity_tts_engine_xml.b64
+          echo 'ZDppZD0iQCtpZC90eHRTdGF0dXMiCiAgICAgICAgYW5kcm9pZDpsYXlvdXRfd2lkdGg9Im1hdGNo' >> tmp_app_src_main_res_layout_activity_tts_engine_xml.b64
+          echo 'X3BhcmVudCIKICAgICAgICBhbmRyb2lkOmxheW91dF9oZWlnaHQ9IndyYXBfY29udGVudCIKICAg' >> tmp_app_src_main_res_layout_activity_tts_engine_xml.b64
+          echo 'ICAgICBhbmRyb2lkOnRleHRTaXplPSIxOHNwIgogICAgICAgIGFuZHJvaWQ6cGFkZGluZ0JvdHRv' >> tmp_app_src_main_res_layout_activity_tts_engine_xml.b64
+          echo 'bT0iMTJkcCIKICAgICAgICBhbmRyb2lkOnRleHQ9IuCkh+CkguCknOCkqCDgpJbgpYvgpJzgpYcg' >> tmp_app_src_main_res_layout_activity_tts_engine_xml.b64
+          echo '4KSc4KS+IOCksOCkueClhyDgpLngpYjgpIIuLi4iIC8+CgogICAgPExpc3RWaWV3CiAgICAgICAg' >> tmp_app_src_main_res_layout_activity_tts_engine_xml.b64
+          echo 'YW5kcm9pZDppZD0iQCtpZC9saXN0RW5naW5lcyIKICAgICAgICBhbmRyb2lkOmxheW91dF93aWR0' >> tmp_app_src_main_res_layout_activity_tts_engine_xml.b64
+          echo 'aD0ibWF0Y2hfcGFyZW50IgogICAgICAgIGFuZHJvaWQ6bGF5b3V0X2hlaWdodD0ibWF0Y2hfcGFy' >> tmp_app_src_main_res_layout_activity_tts_engine_xml.b64
+          echo 'ZW50IiAvPgoKPC9MaW5lYXJMYXlvdXQ+Cg==' >> tmp_app_src_main_res_layout_activity_tts_engine_xml.b64
+          base64 -d tmp_app_src_main_res_layout_activity_tts_engine_xml.b64 > 'app/src/main/res/layout/activity_tts_engine.xml'
+          rm -f tmp_app_src_main_res_layout_activity_tts_engine_xml.b64
+      - name: Write app/src/main/res/values/strings.xml
+        run: |
+          mkdir -p "$(dirname 'app/src/main/res/values/strings.xml')"
+          rm -f tmp_app_src_main_res_values_strings_xml.b64
+          echo 'PHJlc291cmNlcz4KICAgIDxzdHJpbmcgbmFtZT0iYXBwX25hbWUiPuCkruClh+CksOCkviDgpLjg' >> tmp_app_src_main_res_values_strings_xml.b64
+          echo 'pY3gpJXgpY3gpLDgpYDgpKgg4KSw4KWA4KSh4KSwPC9zdHJpbmc+CiAgICA8c3RyaW5nIG5hbWU9' >> tmp_app_src_main_res_values_strings_xml.b64
+          echo 'InR0c19idXR0b24iPuCkn+Clh+CkleCljeCkuOCljeCknyDgpJ/gpYIg4KS44KWN4KSq4KWA4KSa' >> tmp_app_src_main_res_values_strings_xml.b64
+          echo  'IOCkmuClgeCkqOClh+Ckgjwvc3RyaW5nPgogICAgPHN0cmluZyBuYW1lPSJzb3VuZF9idXR0b24i' >> tmp_app_src_main_res_values_strings_xml.b64
+          echo 'PuCkuOCkvuCkieCkguCkoSDgpLjgpY3gpJXgpYDgpK4g4KSa4KWB4KSo4KWH4KSCPC9zdHJpbmc+' >> tmp_app_src_main_res_values_strings_xml.b64
+          echo 'CiAgICA8c3RyaW5nIG5hbWU9InNldHRpbmdzX2J1dHRvbiI+4KSP4KSV4KWN4KS44KWH4KS44KS/' >> tmp_app_src_main_res_values_strings_xml.b64
+          echo '4KSs4KS/4KSy4KS/4KSf4KWAIOCkuOClh+CkteCkviDgpJrgpL7gpLLgpYIg4KSV4KSw4KWH4KSC' >> tmp_app_src_main_res_values_strings_xml.b64
+          echo 'PC9zdHJpbmc+CiAgICA8c3RyaW5nIG5hbWU9ImFjY2Vzc2liaWxpdHlfc2VydmljZV9kZXNjcmlw' >> tmp_app_src_main_res_values_strings_xml.b64
+          echo 'dGlvbiI+4KSv4KS5IOCkuOClh+CkteCkviDgpLjgpY3gpJXgpY3gpLDgpYDgpKgg4KSq4KSwIOCk' >> tmp_app_src_main_res_values_strings_xml.b64
+          echo 'ruCljOCknOClguCkpiDgpIbgpIfgpJ/gpK4g4KSV4KWLIOCkpuCkvuCkj+Ckgi3gpKzgpL7gpI/g' >> tmp_app_src_main_res_values_strings_xml.b64
+          echo 'pIIg4KS44KWN4KS14KS+4KSH4KSqIOCkuOClhyDgpKjgpYfgpLXgpL/gpJfgpYfgpJ8g4KSV4KSw' >> tmp_app_src_main_res_values_strings_xml.b64
+          echo '4KSo4KWHIOCklOCksCDgpKbgpYsg4KSs4KS+4KSwIOCkn+CliOCkqiDgpLjgpYcg4KSV4KWN4KSy' >> tmp_app_src_main_res_values_strings_xml.b64
+          echo '4KS/4KSVIOCkleCksOCkqOClhyDgpK7gpYfgpIIg4KSu4KSm4KSmIOCkleCksOCkpOClgCDgpLng' >> tmp_app_src_main_res_values_strings_xml.b64
+          echo 'pYjgpaQ8L3N0cmluZz4KPC9yZXNvdXJjZXM+Cg==' >> tmp_app_src_main_res_values_strings_xml.b64
+          base64 -d tmp_app_src_main_res_values_strings_xml.b64 > 'app/src/main/res/values/strings.xml'
+          rm -f tmp_app_src_main_res_values_strings_xml.b64
+      - name: Write app/src/main/res/xml/accessibility_service_config.xml
+        run: |
+          mkdir -p "$(dirname 'app/src/main/res/xml/accessibility_service_config.xml')"
+          rm -f tmp_app_src_main_res_xml_accessibility_service_config_xml.b64
+          echo 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPGFjY2Vzc2liaWxpdHktc2Vy' >> tmp_app_src_main_res_xml_accessibility_service_config_xml.b64
+          echo 'dmljZSB4bWxuczphbmRyb2lkPSJodHRwOi8vc2NoZW1hcy5hbmRyb2lkLmNvbS9hcGsvcmVzL2Fu' >> tmp_app_src_main_res_xml_accessibility_service_config_xml.b64
+          echo 'ZHJvaWQiCiAgICBhbmRyb2lkOmFjY2Vzc2liaWxpdHlFdmVudFR5cGVzPSJ0eXBlQWxsTWFzayIK' >> tmp_app_src_main_res_xml_accessibility_service_config_xml.b64
+          echo 'ICAgIGFuZHJvaWQ6YWNjZXNzaWJpbGl0eUZlZWRiYWNrVHlwZT0iZmVlZGJhY2tTcG9rZW4iCiAg' >> tmp_app_src_main_res_xml_accessibility_service_config_xml.b64
+          echo 'ICBhbmRyb2lkOmFjY2Vzc2liaWxpdHlGbGFncz0iZmxhZ1JlcXVlc3RUb3VjaEV4cGxvcmF0aW9u' >> tmp_app_src_main_res_xml_accessibility_service_config_xml.b64
+          echo 'TW9kZXxmbGFnUmV0cmlldmVJbnRlcmFjdGl2ZVdpbmRvd3N8ZmxhZ1JlcG9ydFZpZXdJZHMiCiAg' >> tmp_app_src_main_res_xml_accessibility_service_config_xml.b64
+          echo 'ICBhbmRyb2lkOmNhblJlcXVlc3RUb3VjaEV4cGxvcmF0aW9uTW9kZT0idHJ1ZSIKICAgIGFuZHJv' >> tmp_app_src_main_res_xml_accessibility_service_config_xml.b64
+          echo 'aWQ6Y2FuUmV0cmlldmVXaW5kb3dDb250ZW50PSJ0cnVlIgogICAgYW5kcm9pZDpkZXNjcmlwdGlv' >> tmp_app_src_main_res_xml_accessibility_service_config_xml.b64
+          echo 'bj0iQHN0cmluZy9hY2Nlc3NpYmlsaXR5X3NlcnZpY2VfZGVzY3JpcHRpb24iCiAgICBhbmRyb2lk' >> tmp_app_src_main_res_xml_accessibility_service_config_xml.b64
+          echo 'Om5vdGlmaWNhdGlvblRpbWVvdXQ9IjgwIiAvPgo=' >> tmp_app_src_main_res_xml_accessibility_service_config_xml.b64
+          base64 -d tmp_app_src_main_res_xml_accessibility_service_config_xml.b64 > 'app/src/main/res/xml/accessibility_service_config.xml'
+          rm -f tmp_app_src_main_res_xml_accessibility_service_config_xml.b64
+      - name: Write build.gradle
+        run: |
+          mkdir -p "$(dirname 'build.gradle')"
+          rm -f tmp_build_gradle.b64
+          echo 'YnVpbGRzY3JpcHQgewogICAgcmVwb3NpdG9yaWVzIHsKICAgICAgICBnb29nbGUoKQogICAgICAg' >> tmp_build_gradle.b64
+          echo  'IG1hdmVuQ2VudHJhbCgpCiAgICB9CiAgICBkZXBlbmRlbmNpZXMgewogICAgICAgIGNsYXNzcGF0' >> tmp_build_gradle.b64
+          echo 'aCAiY29tLmFuZHJvaWQudG9vbHMuYnVpbGQ6Z3JhZGxlOjguNS4wIgogICAgICAgIGNsYXNzcGF0' >> tmp_build_gradle.b64
+          echo 'aCAib3JnLmpldGJyYWlucy5rb3RsaW46a290bGluLWdyYWRsZS1wbHVnaW46MS45LjI0IgogICAg' >> tmp_build_gradle.b64
+          echo 'fQp9CgphbGxwcm9qZWN0cyB7CiAgICByZXBvc2l0b3JpZXMgewogICAgICAgIGdvb2dsZSgpCiAg' >> tmp_build_gradle.b64
+          echo 'ICAgICAgbWF2ZW5DZW50cmFsKCkKICAgIH0KfQo=' >> tmp_build_gradle.b64
+          base64 -d tmp_build_gradle.b64 > 'build.gradle'
+          rm -f tmp_build_gradle.b64
+      - name: Write debug.keystore
+        run: |
+          mkdir -p "$(dirname 'debug.keystore')"
+          rm -f tmp_debug_keystore.b64
+          echo 'MIIKZgIBAzCCChAGCSqGSIb3DQEHAaCCCgEEggn9MIIJ+TCCBcAGCSqGSIb3DQEHAaCCBbEEggWt' >> tmp_debug_keystore.b64
+          echo 'MIIFqTCCBaUGCyqGSIb3DQEMCgECoIIFQDCCBTwwZgYJKoZIhvcNAQUNMFkwOAYJKoZIhvcNAQUM' >> tmp_debug_keystore.b64
+          echo 'MCsEFA4p5kw5aJ4g0E+7xl91nTdj8FT1AgInEAIBIDAMBggqhkiG9w0CCQUAMB0GCWCGSAFlAwQB' >> tmp_debug_keystore.b64
+          echo 'KgQQ7WzmxIGUHeRu8HWxhUPSCgSCBND+CBSa7o7n+6oQkGxYnDuU9WR1PxeKK77jnxHKdEWBe2ys' >> tmp_debug_keystore.b64
+          echo 'J1ysxWsSTXgYNOv4qOPTGPtcULCuEdHSMst6pLlfni8lYoPh+n8+q+OoFbdNeKkwG66uuewEiT+p' >> tmp_debug_keystore.b64
+          echo 'wkOREP7/v5jLacnZmaQI6nv+6PKUf5Vbloo+MaOSbnz4WJp1EQ/vMzV064EIy/wfMMNQlbOabeDy' >> tmp_debug_keystore.b64
+          echo 'kSfTmfqUvRJqjeHDNEuEhjt0QGtXGgHnE9Yy+Jy1BFuEI/UuaHaAHaNjYnhHpsGQQjlPTe7egZoq' >> tmp_debug_keystore.b64
+          echo 'nXEdtcFtV9Wkzl6jF8MA04Gdwrnpr7Gjkg9f2UB3dchNWVObVbEYj8ZXyhwIo5ozLpOzDt9wufHF' >> tmp_debug_keystore.b64
+          echo 'Zw+FSXjnGFEOLk3dDQxeHRhBEXqRy335Hq+XwgEGKiZuHLKShZdFAxiZVZCrHnhuD/hpxQMe4Zx/' >> tmp_debug_keystore.b64
+          echo 'RoR+N6MmvB4Wf0W/3KclaNdITX+Lc+J60f1o9lKKqILXCcwSsy9HTNkQUghcAxqELCtj/jXqVvTA' >> tmp_debug_keystore.b64
+          echo 'NNyjo5/FkgFvNqnz1LOH2F6oEYs5Qu5QWKkOpsRyKH7z8/AYQxirvRWZiVguUpPwcDurAbMZ0rLf' >> tmp_debug_keystore.b64
+          echo 'FXQxh3OV2dHASTKOGt8jYZU4lX2N/gdLxw+3pivkCwcxnRRbYYE/OlyPSFAptb4olh04XH12ABHY' >> tmp_debug_keystore.b64
+          echo 'GGIzY+Z/bwuCC6XH1w5Am6bFPRpIPRmWwikZ9TQ2KNVYwvjWLimqWXwN5x4V/QflrsoKqHk7x4Se' >> tmp_debug_keystore.b64
+          echo '0JV915mwhZOg4CS+Llkd7ESIRewf68idem1XpuKA++xUX2Gmn/1zMwExdEyOoVUAZ2kurLiNS71o' >> tmp_debug_keystore.b64
+          echo 'qYz/c9JmEkJfIYvmAPsWcfhMQC+iAsIcBIfB0onbodHzPi1U/h+h3hAYYB8SoMeUcb1XseG/kg7C' >> tmp_debug_keystore.b64
+          echo 'OnPYtvTA9gDAeWtmbveQCDFHLZANqql+vdXKRvGs73bQrty8iwELKxOaNQzeTyUgVQ3O5T/jDcrg' >> tmp_debug_keystore.b64
+          echo 'HFzFpSPEdiZ7cExAzYU/g2xi+/3Yu6vaNSv00YH11DTFYdufLem+N1FLKob+NQqwcfJU85WqaMNx' >> tmp_debug_keystore.b64
+          echo 'uh7qTYOjpzjI0dIaUl9N4S0z+gbh8/ccIeieZJ3TuWAhfRH/Quovy96Ha/NjtjtJUO0mAYHqP+WI' >> tmp_debug_keystore.b64
+          echo 'ypNUaDDOiZL7Dh1pk7Kk9PbWr0nlAwE+j4411iDjIN7xibXz0EtfqBpYdtlJ0G4bZwqaFGq441L+' >> tmp_debug_keystore.b64
+          echo '67cLtNLIJK+6Wzj2ggtiQ2woeqn9+V3nHWOx0VmunVG6IBDl6fHwdYCg9HJBXIJvWYj/2+HQigJM' >> tmp_debug_keystore.b64
+          echo 'BiPTR4xI/C3QX34ItDbE+QWt9dDgN9MZepQ1WCroJur+t7EDYfSy4fxhVCBtB1+enbxTfdcrA39R' >> tmp_debug_keystore.b64
+          echo '9lAVVYWGq5WsHvpCaa9RR7i4MzJA9xNnHYYrfg79HLQPfIrGO3XRefC4RfC4zrXRIMQQf1QWVsKU' >> tmp_debug_keystore.b64
+          echo 'MRkp5TYdxFSHg4fBaYBQE+2Xzu2I9WW5Ge7HebGgV3Bv82E9ZgmFqMGQFZSBNFkH5CgzLMaZnbbJ' >> tmp_debug_keystore.b64
+          echo 'cYULZxnFdT/iab9WMUKkcvAqANxTh0vPslDXmTe18DmLh41O0DhYKTghyul6VZc2CNaWiabYRim+' >> tmp_debug_keystore.b64
+          echo 'mmNwOkoEqqDhGyecbPzpeOGluOSRWcX7Uot7emJUXubM3n7AbAX20myrkIxcxwQlQpPDud+OnQN5' >> tmp_debug_keystore.b64
+          echo 'EDFSMC0GCSqGSIb3DQEJFDEgHh4AYQBuAGQAcgBvAGkAZABkAGUAYgB1AGcAawBlAHkwIQYJKoZI' >> tmp_debug_keystore.b64
+          echo 'hvcNAQkVMRQEElRpbWUgMTc5MDQ5MzAwMTIzOTCCBDEGCSqGSIb3DQEHBqCCBCIwggQeAgEAMIIE' >>  tmp_debug_keystore.b64
+          echo 'FwYJKoZIhvcNAQcBMGYGCSqGSIb3DQEFDTBZMDgGCSqGSIb3DQEFDDArBBS01z4Z9APCm4o1omBu' >> tmp_debug_keystore.b64
+          echo 'qWMyfxzsRAICJxACASAwDAYIKoZIhvcNAgkFADAdBglghkgBZQMEASoEELGoL+XPpZXKiVzmGw9B' >> tmp_debug_keystore.b64
+          echo 'AQGAggOgzh+Bs4XyqjEyiOeKPX99cSOcOYRfxijjc6GyzrnpvHYaKiT/ZhRio0n0ZS1kAQWtvwqC' >> tmp_debug_keystore.b64
+          echo 'epVAsrjUg2QNrItAjnWD5RE/KL1FdFLZDAKZiHVNU1O2wrT04ARwPpNsLU6Szp5bInQA3q9JL6vb' >> tmp_debug_keystore.b64
+          echo '+4xvjIIpuXzg3XIXJFHY0/6oUEPS9MVFBP4V3heV8IkR4jiJ/jchyVdDhCp7QN+vB37iJ7s+kLbV' >> tmp_debug_keystore.b64
+          echo 'z8PBFfRjUztgOKXUAw+ksvXbRzUEIufsgWJKbCaP2dkq59K4HDoiPXq2CXrbzvp8quZNto973dNV' >> tmp_debug_keystore.b64
+          echo '15ZQPFw9FpDkQhmbAjbF417QxrDHTF4SQ18rnNgk6YK8BYYWVPynnrMGXhlMI9TQOEpt80hHt7zq' >> tmp_debug_keystore.b64
+          echo 'pDWvMVzrmg4/TO4kE/rBVpl4MSH7/bFJMVCX5sVDoKlcwiF5CcTAjo8rJ9MYXtDgFFIKaUJZlbjs' >> tmp_debug_keystore.b64
+          echo 'YucFZoGjmSLo2BnJYWZVE1Sax5WljXY1U9YWGXuaGRawQpb70Zba4mprmSoadoephyQOMd0iLNEp' >> tmp_debug_keystore.b64
+          echo 'Vz3GUcX7mokI8PqvzD6gpoT3LBJb/rJV4R8YbGwiaz9APnKShs/tRPeEVz2zspaWh0NlGgECt5yX' >> tmp_debug_keystore.b64
+          echo 'p72vtdMJzk/Zza8agkrP8cjzXbThbj9vAMNNfU3yt1Q04vQAF3CgBCtqEt0OHvO2saXxRrDL8f/9' >> tmp_debug_keystore.b64
+          echo 'qwISEX4Zrm3TlLSszPwYr6C5ar79HahKczACqdvAShRbKb2dwMrOUaOdUIRRT8S5u7fgtqfEeRPr' >> tmp_debug_keystore.b64
+          echo 'GU7Lki/gP3YwzUbdh73DQu0jmnQLxDI2keO0oq9mXBEwmmFOrRAXS5lRbErJYn8CH4s4GP5SiGdj' >> tmp_debug_keystore.b64
+          echo '0Ct43A2qxh5gRkrX4uwh4AAldAjlDyQ7+IXwxFYKV/hcc+WqPMkYyLp44wH/lW32/+1Okx296tme' >> tmp_debug_keystore.b64
+          echo 'QnUMTw4UYth1iVvWtPQ2MOHxuJVdi3w+KkRtfXXaNWLcAbily3lIAXhVE8SBp3Z7w9aRUHHJMd4a' >> tmp_debug_keystore.b64
+          echo 'xA9Mw+2rHTKzhBXTtfWBIQszYkpu0gzkqC2My9nQ4PeyNtTRKtjYLQA7lryuQ7BqHNMBE5akv9k5' >> tmp_debug_keystore.b64
+          echo 'XehhiM8td5vR5qBCHY+YMfra10tTy/xgRNRrrRcNNHSbWQAecXeCqdb08bvLZTndI3VLCqEQ2ymD' >> tmp_debug_keystore.b64
+          echo 'I40dle7liPR7vO1czU8olsKzCkWEl52/MBGYRU0qbsVSXODURYJtUaNw6LwLIiFB6wI/FWcJbZRM' >> tmp_debug_keystore.b64
+          echo 'swaeaoenTYwaj+jMx9zsBQPwNy6K9DBNMDEwDQYJYIZIAWUDBAIBBQAEILjKwwGnepKQjMXxBdZP' >> tmp_debug_keystore.b64
+          echo 'DhLirhayEya0aFKSsRRHBYXdBBQYPkjlQTH4cXmwB9zwwKolA13UHAICJxA=' >> tmp_debug_keystore.b64
+          base64 -d tmp_debug_keystore.b64 > 'debug.keystore'
+          rm -f tmp_debug_keystore.b64
+      - name: Write gradle.properties
+        run: |
+          mkdir -p "$(dirname 'gradle.properties')"
+          rm -f tmp_gradle_properties.b64
+          echo 'b3JnLmdyYWRsZS5qdm1hcmdzPS1YbXgyMDQ4bQphbmRyb2lkLnVzZUFuZHJvaWRYPXRydWUKYW5k' >> tmp_gradle_properties.b64
+          echo 'cm9pZC5ub25UcmFuc2l0aXZlUkNsYXNzPXRydWUKa290bGluLmNvZGUuc3R5bGU9b2ZmaWNpYWwK' >> tmp_gradle_properties.b64
+          base64 -d tmp_gradle_properties.b64 > 'gradle.properties'
+          rm -f tmp_gradle_properties.b64
+      - name: Write settings.gradle
+        run: |
+          mkdir -p "$(dirname 'settings.gradle')"
+          rm -f tmp_settings_gradle.b64
+          echo 'aW5jbHVkZSAnOmFwcCcKcm9vdFByb2plY3QubmFtZSA9ICJNeVNjcmVlblJlYWRlciIK' >> tmp_settings_gradle.b64
+          base64 -d tmp_settings_gradle.b64 > 'settings.gradle'
+          rm -f tmp_settings_gradle.b64
+
+      - name: Unpack iPhone VoiceOver sound scheme (searches repo for the zip)
+        run: |
+          mkdir -p app/src/main/assets/sound_iphone_voiceover
+          ZIPFILE=$(find . -maxdepth 4 -iname "*iphone*voice*over*.zip" | head -n 1)
+          if [ -n "$ZIPFILE" ]; then
+            echo "Found sound scheme zip at: $ZIPFILE"
+            unzip -o "$ZIPFILE" -d app/src/main/assets/sound_iphone_voiceover
+          else
+            echo "::warning::à¤•à¥‹à¤ˆ iPhone VoiceOver zip à¤°à¤¿à¤ªà¥‰à¤œà¤¼à¤¿à¤Ÿà¤°à¥€ à¤®à¥‡à¤‚ à¤¨à¤¹à¥€à¤‚ à¤®à¤¿à¤²à¤¾ (à¤¨à¤¾à¤® à¤®à¥‡à¤‚ iphone, voice, over à¤”à¤° .zip à¤¹à¥‹à¤¨à¤¾  à¤šà¤¾à¤¹à¤¿à¤)à¥¤"
+          fi
+
+      - name: Verify required sound files are present (fails loudly instead of shipping a silent app)
+        run: |
+          MISSING=""
+          for f in focus2.ogg click.ogg ScreenChange.ogg Alert.ogg; do
+            if [ ! -f "app/src/main/assets/sound_iphone_voiceover/$f" ]; then
+              MISSING="$MISSING $f"
+            fi
+          done
+          if [ -n "$MISSING" ]; then
+            echo "::error::à¤¯à¥‡ à¤œà¤¼à¤°à¥‚à¤°à¥€ à¤¸à¤¾à¤‰à¤‚à¤¡ à¤«à¤¼à¤¾à¤‡à¤²à¥‡à¤‚ à¤¨à¤¹à¥€à¤‚ à¤®à¤¿à¤²à¥€à¤‚:$MISSING â€” à¤°à¤¿à¤ªà¥‰à¤œà¤¼à¤¿à¤Ÿà¤°à¥€ à¤®à¥‡à¤‚ iPhone VoiceOver zip à¤•à¤¾ à¤¨à¤¾à¤®/à¤¸à¥à¤¥à¤¾à¤¨ à¤œà¤¾à¤‚à¤šà¥‡à¤‚à¥¤ à¤¬à¤¿à¤²à¥à¤¡ à¤¯à¤¹à¥€à¤‚ à¤°à¥‹à¤•à¤¾ à¤œà¤¾ à¤°à¤¹à¤¾ à¤¹à¥ˆ à¤¤à¤¾à¤•à¤¿ à¤¸à¤¾à¤‰à¤‚à¤¡-à¤°à¤¹à¤¿à¤¤ APK à¤šà¥à¤ªà¤šà¤¾à¤ª à¤¨ à¤¬à¤¨ à¤œà¤¾à¤à¥¤"
+            exit 1
+          fi
+          echo "à¤¸à¤­à¥€ à¤œà¤¼à¤°à¥‚à¤°à¥€ à¤¸à¤¾à¤‰à¤‚à¤¡ à¤«à¤¼à¤¾à¤‡à¤²à¥‡à¤‚ à¤®à¤¿à¤² à¤—à¤ˆà¤‚à¥¤"
+
+      - name: Build debug APK
+        run: gradle assembleDebug --stacktrace
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: MyScreenReader-debug-apk
+          path:  app/build/outputs/apk/debug/app-debug.apk
